@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -36,8 +37,9 @@ public class AccountRepository {
             Date createdAt = timestamp.toDate();
             Timestamp timestamp2 = (Timestamp) document.get("updatedAt");
             Date updatedAt = timestamp2.toDate();
+            Map<String, Boolean> details = (Map<String, Boolean>) document.get("details");
 
-            return Optional.of(new Account(username, email, password, role, createdAt, updatedAt));
+            return Optional.of(new Account(username, email, password, role, createdAt, updatedAt, details));
         }
     }
 }

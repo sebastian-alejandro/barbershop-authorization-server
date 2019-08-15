@@ -24,17 +24,15 @@ public class CustomUserDetailsService implements UserDetailsService {
         try {
             return accountRepository.findByEmail(username)
                     .map(account->new User(account.getUsername(),
-                            account.getPassword(),
+                            encoder.encode(account.getPassword()),
                             account.getDetails().get("enabled"),
                             account.getDetails().get("accountNonExpired"),
                             account.getDetails().get("credentialsNonExpired"),
                             account.getDetails().get("accountNonLocked"),
                             AuthorityUtils.createAuthorityList("write", "read")
-                            ))
-                    .orElseThrow(()-> new UsernameNotFoundException("Email not found"));
+                            )).get();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new UsernameNotFoundException("Email not found");
         }
     }
 }

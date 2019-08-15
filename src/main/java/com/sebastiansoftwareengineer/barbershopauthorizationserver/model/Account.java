@@ -21,6 +21,7 @@ public class Account {
     private Date createdAt;
     @NonNull
     private Date updatedAt;
+    @NonNull
     private Map<String, Boolean> details;
 
 }
